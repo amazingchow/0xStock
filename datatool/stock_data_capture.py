@@ -13,7 +13,7 @@ from ratelimit import limits, RateLimitException, sleep_and_retry
 
 
 @sleep_and_retry
-@limits(calls=90, period=900)
+@limits(calls=90, period=270)
 def http_request(session, flag, stock_code, stock_name, date):
     url = "http://quotes.money.163.com/service/chddata.html?code={}{}&end={}&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER".format(
         flag, stock_code, date.strftime("%Y-%m-%d"))
