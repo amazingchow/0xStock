@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+
 from collections import defaultdict
 from selenium import webdriver
 from selenium.webdriver.common.by import By

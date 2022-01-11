@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p ~/0xStock-data/history-data
+mkdir -p ~/0xStock-data/curr-date-data
 mkdir -p ~/0xStock-db/data
 mkdir -p ~/0xStock-db/migrations
 cp $PWD/storetool/migrations/*.sql ~/0xStock-db/migrations
