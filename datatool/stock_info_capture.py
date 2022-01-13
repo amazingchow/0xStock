@@ -8,6 +8,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
+'''
+抓取国内市面上所有发行的股票信息（股票代码 + 股票名称）
+'''
 def capture_stock_info():
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
@@ -56,6 +59,9 @@ def capture_stock_info():
     f.close()
 
 
+'''
+从抓取的股票中筛选出沪/深A股股票信息（股票代码 + 股票名称）
+'''
 def classify_stock_info():
     f = open("./stock_info/stock_info.txt", "r")
     stock_info_classify_table = defaultdict(list)
@@ -84,3 +90,4 @@ def classify_stock_info():
 if __name__ == "__main__":
     capture_stock_info()
     classify_stock_info()
+    # TODO: 定期抓取新上市的沪/深A股股票信息（股票代码 + 股票名称）
