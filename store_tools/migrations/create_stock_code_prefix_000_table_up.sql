@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS stock_history_data.stock_code_prefix_000 (
     voturnover              FLOAT    NOT NULL, /* 成交量 */
     vaturnover              FLOAT    NOT NULL, /* 成交金额 */
     PRIMARY KEY (id),
-    KEY (stock_code)
+    KEY (capture_date, stock_code)
 ) ENGINE=InnoDB;
