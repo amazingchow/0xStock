@@ -7,13 +7,6 @@ import os
 from mysql.connector import errorcode
 from .singleton import Singleton
 
-__Logger = logging.getLogger("stock_db")
-__Logger.setLevel(logging.INFO)
-__Formatter = logging.Formatter("[%(asctime)-15s][%(levelname)-5s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
-__FileHandler = logging.FileHandler("{}/0xStock-logs/stock_db.log".format(os.path.expanduser("~")), "w")
-__FileHandler.setFormatter(__Formatter)
-__Logger.addHandler(__FileHandler)
-
 
 @Singleton
 class MySQLConnector():
@@ -30,6 +23,13 @@ class MySQLConnector():
         self.password = os.environ.get("MYSQL_PASSWORD")
         if self.password is None or len(self.password) == 0:
             raise Exception("MYSQL_PASSWORD must be set!!!")
+
+        self.logger = logging.getLogger("stock_db")
+        self.logger.setLevel(logging.INFO)
+        _formatter = logging.Formatter("[%(asctime)-15s][%(levelname)-5s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+        _fileHandler = logging.FileHandler("{}/0xStock-logs/stock_db.log".format(os.path.expanduser("~")), "w")
+        _fileHandler.setFormatter(_formatter)
+        self.logger.addHandler(_fileHandler)
 
     def init_conn(self, db: str):
         try:
@@ -57,14 +57,14 @@ class MySQLConnector():
                 self.username, self.password, self.host, self.port
             ))
         else:
-            __Logger.debug("Connect to MySQL Server ({}:{})".format(
+            self.logger.debug("Connect to MySQL Server ({}:{})".format(
                 self.host, self.port
             ))
         cnx.close()
 
     def release_conn(self):
         # TODO: How to release the pooling resources?
-        __Logger.debug("Disconnect from MySQL Server ({}:{})".format(
+        self.logger.debug("Disconnect from MySQL Server ({}:{})".format(
             self.host, self.port
         ))
 
@@ -76,7 +76,7 @@ class MySQLConnector():
             cnx.commit()
         except mysql.connector.Error as err:
             cnx.rollback()
-            __Logger.error("LOAD DATA INFILE err: {}".format(err))
+            self.logger.error("LOAD DATA INFILE err: {}".format(err))
         finally:
             cur.close()
             cnx.close()
@@ -89,7 +89,7 @@ class MySQLConnector():
             cur.execute(stmt)
             result = cur.fetchall()
         except mysql.connector.Error as err:
-            __Logger.error("QUERY err: {}".format(err))
+            self.logger.error("QUERY err: {}".format(err))
         finally:
             cur.close()
             cnx.close()
@@ -103,7 +103,7 @@ class MySQLConnector():
             cnx.commit()
         except mysql.connector.Error as err:
             cnx.rollback()
-            __Logger.error("DELETE err: {}".format(err))
+            self.logger.error("DELETE err: {}".format(err))
         finally:
             cur.close()
             cnx.close()

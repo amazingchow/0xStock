@@ -42,7 +42,7 @@ def http_request(session, flag, stock_code, stock_name, date):
         return
 
     response.encoding = "gbk"
-    f = open("~/0xStock-data/history-data/{}_{}.csv".format(stock_code, stock_name), "w")
+    f = open("{}/0xStock-data/history-data/{}_{}.csv".format(os.path.expanduser("~"), stock_code, stock_name), "w")
     f.write(response.text)
     f.close()
 
