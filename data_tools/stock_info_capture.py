@@ -19,7 +19,7 @@ def capture_stock_info():
     driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", chrome_options=options)
     driver.get("http://quotes.money.163.com/old#query=EQA&DataType=HS_RANK&sort=PERCENT&order=desc&count=24&page=0")
 
-    f = open("./stock_info/stock_info.txt", "w")
+    f = open("./stock_code/stock_code.txt", "w")
 
     page = 1
     while 1:
@@ -63,7 +63,7 @@ def capture_stock_info():
 从抓取的股票中筛选出沪/深A股股票信息（股票代码 + 股票名称）
 '''
 def classify_stock_info():
-    f = open("./stock_info/stock_info.txt", "r")
+    f = open("./stock_code/stock_code.txt", "r")
     stock_info_classify_table = defaultdict(list)
     for line in f:
         parts = line.split(", ")
@@ -72,9 +72,9 @@ def classify_stock_info():
     f.close()
 
     hu_shi_a_stock = ["600", "601", "603", "605"]
-    f_hu_shi_a_stock = open("./stock_info/hu_shi_a_stock_info.txt", "w")
+    f_hu_shi_a_stock = open("./stock_code/hu_shi_a_stock_code.txt", "w")
     shen_shi_a_stock = ["000"]
-    f_shen_shi_a_stock = open("./stock_info/shen_shi_a_stock_info.txt", "w")
+    f_shen_shi_a_stock = open("./stock_code/shen_shi_a_stock_code.txt", "w")
     for k, v in stock_info_classify_table.items():
         for vv in v:
             if k in hu_shi_a_stock:
