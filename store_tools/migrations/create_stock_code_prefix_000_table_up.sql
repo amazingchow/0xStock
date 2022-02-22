@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS stock_history_data.stock_code_prefix_600 (
+CREATE TABLE IF NOT EXISTS stock_history_data.stock_code_prefix_000 (
     id                      INT      NOT NULL AUTO_INCREMENT,
     capture_date            CHAR(10) NOT NULL, /* 抓取日期 */
     stock_code              CHAR(6)  NOT NULL, /* 股票代码 */
@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS stock_history_data.stock_code_prefix_600 (
     voturnover              FLOAT    NOT NULL, /* 成交量 */
     vaturnover              FLOAT    NOT NULL, /* 成交金额 */
     PRIMARY KEY (id),
-    KEY (stock_code)
+    KEY (capture_date, stock_code)
 ) ENGINE=InnoDB;

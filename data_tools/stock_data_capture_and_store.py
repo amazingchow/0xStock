@@ -12,7 +12,7 @@ import tqdm
 from ratelimit import limits, RateLimitException, sleep_and_retry
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from storetool import load_stock_data_file
+from store_tools import load_stock_data_file
 
 __Logger = logging.getLogger("stock_data_capture")
 __Logger.setLevel(logging.INFO)
@@ -42,7 +42,7 @@ def http_request(session, flag, stock_code, stock_name, date):
         return
 
     response.encoding = "gbk"
-    f = open("~/0xStock-data/history-data/{}_{}.csv".format(stock_code, stock_name), "w")
+    f = open("{}/0xStock-data/history-data/{}_{}.csv".format(os.path.expanduser("~"), stock_code, stock_name), "w")
     f.write(response.text)
     f.close()
 
@@ -53,13 +53,13 @@ def http_request(session, flag, stock_code, stock_name, date):
 def capture_stock_data():
     with requests.Session() as session:
         stock_list = []
-        f = open("./stock_info/hu_shi_a_stock_info.txt", "r")
+        f = open("./stock_code/hu_shi_a_stock_code.txt", "r")
         for line in f:
             parts = line.split(", ")
             stock_code, stock_name = parts[0].strip(), parts[1].strip()
             stock_list.append((0, stock_code, stock_name))
         f.close()
-        f = open("./stock_info/shen_shi_a_stock_info.txt", "r")
+        f = open("./stock_code/shen_shi_a_stock_code.txt", "r")
         for line in f:
             parts = line.split(", ")
             stock_code, stock_name = parts[0].strip(), parts[1].strip()
