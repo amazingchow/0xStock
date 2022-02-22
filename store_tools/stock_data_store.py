@@ -13,7 +13,7 @@ db_connector = MySQLConnector.instance()
 db_connector.init_conn("stock_history_data")
 
 
-def load_stock_data_file(db_table, csv_file):
+def load_stock_data_file(db_table: str, csv_file: str):
     db_connector.load_data_infile(
         """LOAD DATA LOCAL INFILE "{}" """.format(csv_file) +
         "INTO TABLE stock_history_data.{} ".format(db_table) +
